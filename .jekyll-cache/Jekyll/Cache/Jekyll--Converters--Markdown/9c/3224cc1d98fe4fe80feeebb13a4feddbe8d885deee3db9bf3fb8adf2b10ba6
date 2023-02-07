@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-07T19:45:20+01:00</updated><id>http://localhost:4000/feed.xml</id><entry><title type="html">Scaling Factors for Hidden Markov Models</title><link href="http://localhost:4000/blog/2023/02/06/example-copy/" rel="alternate" type="text/html" title="Scaling Factors for Hidden Markov Models" /><published>2023-02-06T00:00:00+01:00</published><updated>2023-02-06T00:00:00+01:00</updated><id>http://localhost:4000/blog/2023/02/06/example%20copy</id><content type="html" xml:base="http://localhost:4000/blog/2023/02/06/example-copy/"><![CDATA[<h2 id="heading">Heading</h2>
+I"b$<h2 id="heading">Heading</h2>
 <p>Here are some words. And this is some math:</p>
 
 <p>This works exactly the same as obsidian <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>
@@ -16,15 +16,5 @@ c = \pm\sqrt{a^2 + b^2}
 
 <h2 id="df">df</h2>
 
-<p>Cool!</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Heading Here are some words. And this is some math:]]></summary></entry><entry><title type="html">Scaling Factors for Hidden Markov Models</title><link href="http://localhost:4000/blog/2023/02/06/example/" rel="alternate" type="text/html" title="Scaling Factors for Hidden Markov Models" /><published>2023-02-06T00:00:00+01:00</published><updated>2023-02-06T00:00:00+01:00</updated><id>http://localhost:4000/blog/2023/02/06/example</id><content type="html" xml:base="http://localhost:4000/blog/2023/02/06/example/"><![CDATA[<h2 id="heading">Heading</h2>
-<p>Here are some words. And this is some math:</p>
-
-<p>This works exactly the same as obsidian $x$ and $y$ $e = mc^2.$</p>
-
-<p>$e = mc^2. \tag{1}$</p>
-
-<p>tag를 붙이면 위처럼 display 모드가 자동으로 됨.</p>
-
-<h2 id="df">df</h2>
-
-<p>Cool!</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Heading Here are some words. And this is some math:]]></summary></entry></feed>
+<p>Cool!</p>
+:ET
