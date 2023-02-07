@@ -2,7 +2,7 @@
 highlighter: rouge
 permalink: /blog/:year/:month/:day/:title/
 environment: prod
-url: "riskydatabyjin"  # Sitemap base URL.
+url: "https://yanjini.github.io/riskydatabyjin"  # Sitemap base URL.
 plugins:
   - jekyll-scholar
   - jekyll-sitemap
