@@ -7,7 +7,7 @@ html {
   text-size-adjust: 100%;
 }
 body {
-  margin: 0;
+  margin: 0px;
 }
 body .content {
   margin-bottom: 120px;
@@ -30,6 +30,10 @@ h6 {
 }
 h1 {
   line-height: 1.2em;
+  font-size: 36px
+}
+h4 {
+  font-size: 17px
 }
 .clear {
   clear: both;
@@ -38,7 +42,7 @@ h1 {
   display: none;
 }
 .wrap {
-  max-width: 700px;
+  max-width: 780px;
   margin: 0 auto;
 }
 .mono {
@@ -85,12 +89,12 @@ h1 {
   font-family: -apple-system, Helvetica, arial, sans-serif;
 }
 .front-matter .bylines .byline h3 {
-  font-size: 9px;
+  font-size: 10px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.5);
 }
 .front-matter .bylines .byline p {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.6em;
 }
 .front-matter-image {
@@ -159,7 +163,7 @@ table td {
   border-left: 0.25em solid #ddd;
 }
 .article h2 {
-  font-size: 26px;
+  font-size: 30px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 1rem;
   padding-top: 1em;
