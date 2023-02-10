@@ -30,10 +30,10 @@ h6 {
 }
 h1 {
   line-height: 1.2em;
-  font-size: 36px
+  font-size: 32px
 }
 h4 {
-  font-size: 17px
+  font-size: 16px
 }
 .clear {
   clear: both;
@@ -42,7 +42,7 @@ h4 {
   display: none;
 }
 .wrap {
-  max-width: 780px;
+  max-width: 700px;
   margin: 0 auto;
 }
 .mono {
@@ -58,7 +58,7 @@ h4 {
   color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
   border-bottom: none;
-  font-size: 14px;
+  font-size: 12px;
 }
 .nav a:hover {
   font-weight: bold;
@@ -89,12 +89,12 @@ h4 {
   font-family: -apple-system, Helvetica, arial, sans-serif;
 }
 .front-matter .bylines .byline h3 {
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.5);
 }
 .front-matter .bylines .byline p {
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.6em;
 }
 .front-matter-image {
@@ -163,7 +163,7 @@ table td {
   border-left: 0.25em solid #ddd;
 }
 .article h2 {
-  font-size: 30px;
+  font-size: 26px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 1rem;
   padding-top: 1em;
@@ -221,7 +221,7 @@ table td {
 }
 #blog #intro,
 .tag-page #intro {
-  font-size: 15px;
+  font-size: 14px;
   font-style: italic;
   line-height: 1.4em;
   margin-bottom: 40px;
@@ -238,7 +238,7 @@ table td {
 .tag-page .post-date {
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -251,7 +251,7 @@ table td {
 }
 #blog .post-title a,
 .tag-page .post-title a {
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
 }
 #blog .post-title a:hover,
@@ -260,7 +260,7 @@ table td {
 }
 #blog .post-subtitle,
 .tag-page .post-subtitle {
-  font-size: 15px;
+  font-size: 14px;
   margin-top: 0;
   margin-bottom: 25px;
   line-height: 1.5em;
@@ -298,7 +298,7 @@ table td {
 }
 #blog ul#tag-nav li a,
 .tag-page ul#tag-nav li a {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
 }

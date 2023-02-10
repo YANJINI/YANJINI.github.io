@@ -1,0 +1,27 @@
+I"Ä<p>In finance, Value at Risk (VaR) is a crucial metric for asessing the risk of an investment portfolio. VaR provides an estimate of the rare but potential loss an investment may face over a specific time horizon and confidence level. Since VaR is basically to say how much we can expect to lose in the event of a rare event with a 5% or 1% probability of occurrence for a particular period of time, it requires the underlying distribution of the investment returns. 
+The various models we learn from time series analysis can be said to be an attempt to accurately figure out this distribution. GARCH model is one of those with effective properties for financial data analysis.</p>
+
+<h2 id="prices-returns-log-returns">Prices, returns, log returns</h2>
+
+<p>dknfd</p>
+
+<div class="figure">
+    <img src="/image/VaR/Geometric Random Walk.png" style="width: 60%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 1.</span> Diagram of rejection sampling. The 
+        density $q(\mathbf{z})$ must be always greater than $p(\mathbf{x})$. A new sample 
+        is rejected if it falls in the gray region and accepted otherwise. These accepted 
+        samples are distributed according to $p(\mathbf{x})$. This is achieved by sampling 
+        $z_i$ from $q(\mathbf{z})$, and then sampling uniformly from $[0, k q(z_i)]$. 
+        Samples under the curve $p(z_i)$ are accepted.
+    </div>
+</div>
+
+<p>dkmd</p>
+
+<h2 id="lets-check-if-this-work">Lets check if this work</h2>
+
+<p>Cool!</p>
+
+<p>add equations and Letâ€™s say the company is mcdonald and  change the title more attractive to general public (for example how much can we expect to lose from investment in mcdonald stock)</p>
+:ET
