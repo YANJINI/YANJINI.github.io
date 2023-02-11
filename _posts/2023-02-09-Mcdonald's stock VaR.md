@@ -6,18 +6,25 @@ date: 2023-02-09
 keywords: blogging, writing
 published: true
 ---
-In finance, Value at Risk (VaR) is a crucial metric for asessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it's necessary to have an understanding of the underlying distribution of investment returns.
+In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it's necessary to have an understanding of the underlying distribution of investment returns.
 
 To accurately determine this distribution, various models from time series analysis can be used. The GARCH model, in particular, is known for its effectiveness in analyzing financial data. One of the main reasons to choose GARCH over other models, such as empirical distribution (actually it is even model-free), random walk, or ARIMA, is that it can capture the volatility dynamics of the stock return, which is essential for accurate VaR calculation of financial asset return.
 
 ## Prices, simple returns, log returns
-Whose distribution exactly do we want to figure out for VaR calculation?  Long story short, we indentify the distribution of log returns of McDonald's stock due to the desirable characteristics of log returns for statistical or practical analysis purpose.
+Whose distribution exactly do we want to figure out for VaR calculation?  Long story short, we identify the distribution of log returns of McDonald's stock due to the desirable characteristics of log returns for statistical analysis purpose.
 
-The terms "prices", "simple returns" and "log returns" refer to different ways of measuring the performance of an investment over time. Price is the most common form of financial asset data we can encounter and the other two are transformed version of this. Let $P_{t}$, $R_{t}$ and $r_{t}$ respectively denote the price, simple return and log return of McDonald's stock at time $t$. Then $R_{t}$ and $r_{t}$ are defined as
+The terms "prices", "simple returns" and "log returns" refer to different ways of measuring the performance of an investment over time. Price is the most common form of financial asset data we can encounter and the other two are transformed version of this. Let $P_{t}$, $R_{t}$ and $r_{t}$ respectively denote the price, one-period simple return and one-period log return of McDonald's stock at time $t$. Then $R_{t}$ and $r_{t}$ are defined as
 
 $R_{t}=\dfrac{P_{t}-P_{t-1}}{P_{t-1}}\tag{1}$
 
 $r_{t}=log \left(\dfrac{P_{t}}{P_{t-1}}\right)=log(1+R_{t})\tag{2}$
+
+The log return is frequently referred to as the continuously compounded return on account of the following mathematical principle.
+
+$$\begin{align}
+& e^{r_{t}}=\dfrac{P_{t}}{P_{t-1}}\\
+& P_{t}=P_{t-1}e^{r_{t}}
+\end{align} \tag{3}$$
 
 Both  $R_{t}$ and $r_t$ are measure of the relative movements of price, which is a useful property for comparison of performance between assets. Another technical reason we might be more interested in simple return and log return than raw price is that they could be used as a remedy for non-stationarity of price time-series (differencing).
 
@@ -29,7 +36,9 @@ Both  $R_{t}$ and $r_t$ are measure of the relative movements of price, which is
     </div>
 </div>
 
- As seen on the chart of McDonald's stock price, it is impossible to conduct a statiscal analysis with this due to non-stationarity. The substantial similarity simple return and log return charts exhibit is linked with the fact that the simple return metric is an approximation for  log return by a first-order Talyor expansion.
+See [A1](#code-1) for the code to generate this figure.
+
+As seen on the chart of McDonald's stock price, it is impossible to conduct a statistical analysis with this due to the non-stationarity. The substantial similarity simple return and log return charts exhibit is linked with the fact that the simple return metric is an approximation for  log return by a first-order Talyor expansion.
 
 The first order Taylor Expansion of $log(x)$ around $x=1$ is as follows.
 
@@ -37,21 +46,78 @@ $$\begin{align}
 log(x)
 &\simeq log(1)+log^{'}(1)(x-1)\\
 &\simeq 0+\dfrac{1}{1}(x-1)
-\end{align} \tag{3}$$
+\end{align} \tag{4}$$
 
-So when $\dfrac{P_{t}}{P_{t-1}}\simeq 1$
+So, when $\dfrac{P_{t}}{P_{t-1}}\simeq 1$
 
 $$\begin{align}
-r_{t}
-&\simeq log \left(\dfrac{P_{t}}{P_{t-1}}\right)\\
+r_{t}=log \left(\dfrac{P_{t}}{P_{t-1}}\right)
 &\simeq \dfrac{P_{t}}{P_{t-1}}-1\\
-&\simeq \dfrac{P_{t}-P_{t-1}}{P_{t-1}}\\
-&\simeq R_{t}
-\end{align} \tag{4}$$
+&\simeq \dfrac{P_{t}-P_{t-1}}{P_{t-1}}=R_{t}
+\end{align} \tag{5}$$
+
+When $R_{t}$ is small enough, the difference between simple return and log return is negligible. Log return, however, is often chosen over simple return at least for two practical reasons.
+
+First, log returns are additive, which makes it simpler to calculate the total return of an investment over time. Let $r_{k,\ t}$ denote log return over k-th period at time $t$
+
+$$\begin{align}
+r_{k,\ t}
+&=log \left(\dfrac{P_{t}}{P_{t-k}}\right)\\
+&=log \left(\dfrac{P_{t}}{P_{t-1}}\right)+log \left(\dfrac{P_{t}}{P_{t-2}}\right)+\ ...\ +log \left(\dfrac{P_{t}}{P_{t-k}}\right)\\
+&=r_{1,\ t}+r_{1,\ t-1}+\ ...\ +r_{1,\ t-k}\\
+&=r_{t}+r_{t-1}+\ ...\ +r_{t-k}
+\end{align} \tag{6}$$
+
+Second, simple returns are inherently asymmetric due to the limited liability issue (simple returns are bounded by -100%) and positive skewness, and logarithmic transformation remedies this problem by mapping the range of $(-1, 0)$ to the range of $(-\infty, 0)$ and limiting big positive values.
+
+To summarize, log returns are often preferred in the statistical analysis of financial assets due to their suitability for comparison, symmetric nature, and ease of calculation for different time horizons. So, I am will determine the distribution of the log returns of McDonald's stock for calculating Value at Risk (VaR).
 
 
 ## Value at Risk (VaR)
 
-Cool!
 
-add equations and Let's say the company is mcdonald and  change the title more attractive to general public (for example how much can we expect to lose from investment in mcdonald stock)
+## Appendix
+
+<a id="code-1"></a>
+### A1: Prices, simple returns and log returns
+I imported the closing price data of McDonal's stock for the past five years from Yahoo Finance through `getSymbols` function in `quantmod` library.
+```R
+# load Mcdonald's stock data
+library(tidyquant)
+
+options("getSymbols.warning4.0"=FALSE)
+options("getSymbols.yahoo.warning"=FALSE)
+
+getSymbols("MCD", from = '2018-01-01',
+           to = "2023-01-01",warnings = FALSE,
+           auto.assign = TRUE)
+
+
+# price, return, log return into one xts object
+MCD <- MCD[, "MCD.Close"]
+MCD_sreturn <- diff(MCD)/stats::lag(MCD)  ## dplyr::lag(MCD) generates error
+MCD_lreturn <- diff(log(MCD))
+
+MCD_perform <- merge(MCD, MCD_sreturn, MCD_lreturn)
+colnames(MCD_perform) <- c("Price", "Simple_return", "Log_return")
+
+
+# plot the three
+library(ggplot2)
+
+autoplot(MCD_perform) +
+  xlab("Year") +
+  scale_x_date(date_breaks = "1 year") +
+  facet_grid(Series ~ ., scales="free_y",
+             switch="y") +
+  theme(strip.background = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major =  element_line(colour="#E7E7E7"),
+        panel.grid.minor = element_line(colour="#E7E7E7"),
+        axis.line = element_line(colour = "black"),
+        strip.placement = "outside",
+        strip.text = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        axis.text = element_text(size=14)) +
+  geom_line(color="#1F77B4", size=0.5)
+```

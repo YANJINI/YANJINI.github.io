@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-11T13:40:51+01:00</updated><id>http://localhost:4000/feed.xml</id><entry><title type="html">How Risky is McDonald’s Stock?</title><link href="http://localhost:4000/blog/2023/02/09/Mcdonald's-stock-VaR/" rel="alternate" type="text/html" title="How Risky is McDonald’s Stock?" /><published>2023-02-09T00:00:00+01:00</published><updated>2023-02-09T00:00:00+01:00</updated><id>http://localhost:4000/blog/2023/02/09/Mcdonald&apos;s%20stock%20VaR</id><content type="html" xml:base="http://localhost:4000/blog/2023/02/09/Mcdonald&apos;s-stock-VaR/"><![CDATA[<p>In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.</p>
+I"�&<p>In finance, Value at Risk (VaR) is a crucial metric for asessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.</p>
 
 <p>To accurately determine this distribution, various models from time series analysis can be used. The GARCH model, in particular, is known for its effectiveness in analyzing financial data. One of the main reasons to choose GARCH over other models, such as empirical distribution (actually it is even model-free), random walk, or ARIMA, is that it can capture the volatility dynamics of the stock return, which is essential for accurate VaR calculation of financial asset return.</p>
 
 <h2 id="prices-simple-returns-log-returns">Prices, simple returns, log returns</h2>
-<p>Whose distribution exactly do we want to figure out for VaR calculation?  Long story short, we identify the distribution of log returns of McDonald’s stock due to the desirable characteristics of log returns for statistical analysis purpose.</p>
+<p>Whose distribution exactly do we want to figure out for VaR calculation?  Long story short, we indentify the distribution of log returns of McDonald’s stock due to the desirable characteristics of log returns for statistical analysis purpose.</p>
 
 <p>The terms “prices”, “simple returns” and “log returns” refer to different ways of measuring the performance of an investment over time. Price is the most common form of financial asset data we can encounter and the other two are transformed version of this. Let $P_{t}$, $R_{t}$ and $r_{t}$ respectively denote the price, one-period simple return and one-period log return of McDonald’s stock at time $t$. Then $R_{t}$ and $r_{t}$ are defined as</p>
 
@@ -23,13 +23,11 @@
 <div class="figure">
     <img src="/image/VaR/McDonald's price, return and log return.png" style="width: 100%; display: block; margin: 0 auto;" />
     <div class="caption">
-        <span class="caption-label">Figure 1.</span> Closing prices (top), simple returns (middle) and log returns (bottom) of McDonald's stock for past five years.
+        <span class="caption-label">Figure 1.</span> Closing prices (top), simple returns (middle) and log returns (bottom) of McDonald's stock for past five years. See [A1](#code-1) for the code to generate these plots.
     </div>
 </div>
 
-<p>See <a href="#code-1">A1</a> for the code to generate this figure.</p>
-
-<p>As seen on the chart of McDonald’s stock price, it is impossible to conduct a statistical analysis with this due to the non-stationarity. The substantial similarity simple return and log return charts exhibit is linked with the fact that the simple return metric is an approximation for  log return by a first-order Talyor expansion.</p>
+<p>As seen on the chart of McDonald’s stock price, it is impossible to conduct a statiscal analysis with this due to the non-stationarity. The substantial similarity simple return and log return charts exhibit is linked with the fact that the simple return metric is an approximation for  log return by a first-order Talyor expansion.</p>
 
 <p>The first order Taylor Expansion of $log(x)$ around $x=1$ is as follows.</p>
 
@@ -39,7 +37,7 @@ log(x)
 &amp;\simeq 0+\dfrac{1}{1}(x-1)
 \end{align} \tag{4}\]
 
-<p>So, when $\dfrac{P_{t}}{P_{t-1}}\simeq 1$</p>
+<p>So when $\dfrac{P_{t}}{P_{t-1}}\simeq 1$</p>
 
 \[\begin{align}
 r_{t}=log \left(\dfrac{P_{t}}{P_{t-1}}\right)
@@ -61,43 +59,27 @@ r_{k,\ t}
 
 <p>Second, simple returns are inherently asymmetric due to the limited liability issue (simple returns are bounded by -100%) and positive skewness, and logarithmic transformation remedies this problem by mapping the range of $(-1, 0)$ to the range of $(-\infty, 0)$ and limiting big positive values.</p>
 
-<p>To summarize, log returns are often preferred in the statistical analysis of financial assets due to their suitability for comparison, symmetric nature, and ease of calculation for different time horizons. So, I am will determine the distribution of the log returns of McDonald’s stock for calculating Value at Risk (VaR).</p>
+<p>To summarize, log returns are often preferred in the statistical analysis of financial assets due to their suitability for comparison, symmetric nature, and ease of calculation for different time horizons. So, we are going to determine the distribution of the log returns of McDonald’s stock for calculating Value at Risk (VaR).</p>
 
 <h2 id="value-at-risk-var">Value at Risk (VaR)</h2>
+<p>Maybe VaR could be eariler than Price, return, log return part to definte what that is and why it needs some distribution earlier and then naturally “whose distribution?”</p>
+
+<p>Cool!</p>
+
+<p>add equations and Let’s say the company is mcdonald and  change the title more attractive to general public (for example how much can we expect to lose from investment in mcdonald stock)</p>
 
 <h2 id="appendix">Appendix</h2>
 
-<p><a id="code-1"></a></p>
-<h3 id="a1-prices-simple-returns-and-log-returns">A1: Prices, simple returns and log returns</h3>
-<p>I imported the closing price data of McDonal’s stock for the past five years from Yahoo Finance through <code class="highlighter-rouge">getSymbols</code> function in <code class="highlighter-rouge">quantmod</code> library.</p>
-<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load Mcdonald's stock data</span><span class="w">
-</span><span class="n">library</span><span class="p">(</span><span class="n">tidyquant</span><span class="p">)</span><span class="w">
-
-</span><span class="n">options</span><span class="p">(</span><span class="s2">"getSymbols.warning4.0"</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-</span><span class="n">options</span><span class="p">(</span><span class="s2">"getSymbols.yahoo.warning"</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-
-</span><span class="n">getSymbols</span><span class="p">(</span><span class="s2">"MCD"</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'2018-01-01'</span><span class="p">,</span><span class="w">
-           </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2023-01-01"</span><span class="p">,</span><span class="n">warnings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
-           </span><span class="n">auto.assign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
-
-
-</span><span class="c1"># price, return, log return into one xts object</span><span class="w">
-</span><span class="n">MCD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">MCD</span><span class="p">[,</span><span class="w"> </span><span class="s2">"MCD.Close"</span><span class="p">]</span><span class="w">
-</span><span class="n">MCD_sreturn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="n">MCD</span><span class="p">)</span><span class="o">/</span><span class="n">stats</span><span class="o">::</span><span class="n">lag</span><span class="p">(</span><span class="n">MCD</span><span class="p">)</span><span class="w">  </span><span class="c1">## dplyr::lag(MCD) generates error</span><span class="w">
-</span><span class="n">MCD_lreturn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">MCD</span><span class="p">))</span><span class="w">
-
-</span><span class="n">MCD_perform</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="n">MCD</span><span class="p">,</span><span class="w"> </span><span class="n">MCD_sreturn</span><span class="p">,</span><span class="w"> </span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w">
-</span><span class="n">colnames</span><span class="p">(</span><span class="n">MCD_perform</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Price"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Simple_return"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Log_return"</span><span class="p">)</span><span class="w">
-
-
-</span><span class="c1"># plot the three</span><span class="w">
-</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+<h3 id="a1-prices-simple-returns-and-log-returns">##A1: Prices, simple returns and log returns##</h3>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
 
 </span><span class="n">autoplot</span><span class="p">(</span><span class="n">MCD_perform</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"Year"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">scale_x_date</span><span class="p">(</span><span class="n">date_breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1 year"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">Series</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">scales</span><span class="o">=</span><span class="s2">"free_y"</span><span class="p">,</span><span class="w">
-             </span><span class="n">switch</span><span class="o">=</span><span class="s2">"y"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+             </span><span class="n">switch</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span><span class="w">
+
+  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">theme</span><span class="p">(</span><span class="n">strip.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
         </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
         </span><span class="n">panel.grid.major</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">element_line</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#E7E7E7"</span><span class="p">),</span><span class="w">
@@ -108,4 +90,5 @@ r_{k,\ t}
         </span><span class="n">axis.title.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">),</span><span class="w">
         </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">geom_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">"#1F77B4"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.]]></summary></entry></feed>
+</span></code></pre></div></div>
+:ET
