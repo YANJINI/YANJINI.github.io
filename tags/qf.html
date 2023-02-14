@@ -45,6 +45,7 @@ permalink: /blog/tags/qf
         <hr style="margin-bottom: 1.5em;", color="#E7E7E7" noshade/>
         <div id='posts' class='section'>
             {% for post in site.posts %}
+            {% if post.categories contains 'qf' %}
                 <div class='post-row'>
                     <p class='post-title'>
                         <a href="{{ post.url }}">
@@ -59,6 +60,7 @@ permalink: /blog/tags/qf
                   {{ post.subtitle }}
                 </p>
                 <span class='hidden'>{{ forloop.index }}</span>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

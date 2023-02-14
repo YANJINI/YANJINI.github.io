@@ -43,6 +43,7 @@ permalink: /blog/tags/all
 	{% include tag.html %}
         <div id='posts' class='section'>
             {% for post in site.posts %}
+            {% if post.categories contains 'all' %}
                 <div class='post-row'>
                     <p class='post-title'>
                         <a href="{{ post.url }}">
@@ -57,6 +58,7 @@ permalink: /blog/tags/all
                   {{ post.subtitle }}
                 </p>
                 <span class='hidden'>{{ forloop.index }}</span>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

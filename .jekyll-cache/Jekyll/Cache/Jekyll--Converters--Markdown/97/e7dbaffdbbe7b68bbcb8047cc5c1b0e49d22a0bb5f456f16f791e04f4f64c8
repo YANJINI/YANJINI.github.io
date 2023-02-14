@@ -1,3 +1,0 @@
-I"ª<p>In finance, Value at Risk (VaR) is a crucial metric for asessing the risk of an investment portfolio. VaR provides an estimate of the rare but potential loss an investment may face over a specific time horizon and confidence level. Since VaR is basically to say how much we can expect to lose in the event of a rare event with a 5% or 1% probability of occurrence for a particular period of time, it requires the underlying distribution of the investment returns. 
-The various models we learn from time series analysis can be said to be an attempt to accurately figure out this distribution. GARCH model is one of those with effective properties for financial data analysis.</p>
-:ET
