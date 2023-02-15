@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-15T11:43:31+01:00</updated><id>http://localhost:4000/feed.xml</id><entry><title type="html">How Risky is McDonald’s Stock?</title><link href="http://localhost:4000/blog/2023/02/15/Mcdonald's-stock-VaR/" rel="alternate" type="text/html" title="How Risky is McDonald’s Stock?" /><published>2023-02-15T00:00:00+01:00</published><updated>2023-02-15T00:00:00+01:00</updated><id>http://localhost:4000/blog/2023/02/15/Mcdonald&apos;s-stock-VaR</id><content type="html" xml:base="http://localhost:4000/blog/2023/02/15/Mcdonald&apos;s-stock-VaR/"><![CDATA[<p>In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.</p>
+<html>
+<head>
+    <link rel="shortcut icon" href="/">
+    <title>How Risky is McDonald's Stock?</title>
+    <meta charset='UTF-8'>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+
+    <meta name='description' content='Jin is a graduate student in financial data science in Poland.'>
+    <meta name='keywords' content='blogging, writing, project'>
+    <meta name='author' content='Yeongjin Song'>
+
+    <link href='/css/blog.css' rel='stylesheet'/>
+    <link href='/css/trac.css' rel='stylesheet'/>
+    <link href='/css/markdown.css' rel='stylesheet'/>
+
+    <script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  jax: ['input/TeX', 'output/HTML-CSS'],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    extensions: ['color.js']
+  },
+  messageStyle: 'none',
+  'HTML-CSS': { preferredFont: 'TeX', availableFonts: ['STIX','TeX'] }
+});
+</script>
+
+<script src='//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML' type='text/javascript'></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+
+</head>
+<body>
+<div class='content'>
+    <div class='nav'>
+    <ul class='wrap'>
+        <li><a href='/'>Home</a></li>
+        <li><a href='/blog'>Blog</a></li>
+        <li><a href='feed.xml'>RSS</a></li>
+    </ul>
+</div>
+
+    <div class='front-matter'>
+        <div class='wrap'>
+            <h1>How Risky is McDonald's Stock?</h1>
+            <h4>I estimate the daily Value at Risk (VaR) of McDonald's stock in R by using a GARCH model that takes into account heavy-tailed White Noise innovations.</h4>
+            <div class='bylines'>
+                <div class='byline'>
+                    <h3>Published</h3>
+                    <p>15 February 2023</p>
+                </div>
+            </div>
+            <div class='clear'></div>
+        </div>
+    </div>
+    <div class='wrap article'>
+        <p>In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.</p>
 
 <p>To accurately determine this distribution, various models from time series analysis can be used. The GARCH model, in particular, is known for its effectiveness in analyzing financial data. One of the main reasons to choose GARCH over other models, such as empirical distribution (actually it is even model-free), random walk, or ARIMA, is that it can capture the volatility dynamics of the stock return, which is essential for accurate VaR calculation of financial asset return.</p>
 
@@ -151,6 +209,9 @@ r_{k,\ t}
 </span><span class="n">abline</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VaR</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#D62728"</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
 </span><span class="n">legend</span><span class="p">(</span><span class="s2">"topright"</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"VaR (95% confidence): "</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">VaR</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">
                                    </span><span class="s2">"%"</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#D62728"</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>]]></content><author><name></name></author><category term="all" /><category term="qf" /><summary type="html"><![CDATA[In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.]]></summary></entry><entry><title type="html">Credit Risk Modeling using Home Credit Dataset</title><link href="http://localhost:4000/blog/2023/02/12/Homecredit-risk-modeling/" rel="alternate" type="text/html" title="Credit Risk Modeling using Home Credit Dataset" /><published>2023-02-12T00:00:00+01:00</published><updated>2023-02-12T00:00:00+01:00</updated><id>http://localhost:4000/blog/2023/02/12/Homecredit%20risk-modeling</id><content type="html" xml:base="http://localhost:4000/blog/2023/02/12/Homecredit-risk-modeling/"><![CDATA[<p>저번학기 credit scoring 수업이야기. 교수는 매우 열정충만하고 좋았지만 프로젝트가 그냥 자기가 만든 파일 그대로 유지하면서 컷오프만 바꿔 수익을 늘리는 거라 수업 배운 내용을 전혀 써먹을 수 없었다. 그래서 udemy의 수업을 들은 뒤에, 또 다른 데이터인 homecredit으로 배운 내용은 다시 적용한 뒤 깔끔하게 documentation하는 것이 목표.</p>
+</span></code></pre></div></div>
 
-<h2 id="djf">djf</h2>]]></content><author><name></name></author><category term="all" /><category term="crm" /><summary type="html"><![CDATA[저번학기 credit scoring 수업이야기. 교수는 매우 열정충만하고 좋았지만 프로젝트가 그냥 자기가 만든 파일 그대로 유지하면서 컷오프만 바꿔 수익을 늘리는 거라 수업 배운 내용을 전혀 써먹을 수 없었다. 그래서 udemy의 수업을 들은 뒤에, 또 다른 데이터인 homecredit으로 배운 내용은 다시 적용한 뒤 깔끔하게 documentation하는 것이 목표.]]></summary></entry></feed>
+    </div>
+</div>
+</body>
+</html>
