@@ -8,5 +8,6 @@ published: true
 categories: [all, crm]
 ---
 저번학기 credit scoring 수업이야기. 교수는 매우 열정충만하고 좋았지만 프로젝트가 그냥 자기가 만든 파일 그대로 유지하면서 컷오프만 바꿔 수익을 늘리는 거라 수업 배운 내용을 전혀 써먹을 수 없었다. 그래서 udemy의 수업을 들은 뒤에, 또 다른 데이터인 homecredit으로 배운 내용은 다시 적용한 뒤 깔끔하게 documentation하는 것이 목표.
+[Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data)
 
 ## djf
