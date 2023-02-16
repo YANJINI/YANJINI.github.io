@@ -4,7 +4,7 @@ subtitle: I estimate the daily Value at Risk (VaR) of McDonald's stock in R by u
 layout: default
 date: 2023-02-15
 keywords: blogging, writing, project
-published: true
+published: false
 categories: [all, qf]
 ---
 In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it's necessary to have an understanding of the underlying distribution of investment returns.
@@ -96,18 +96,26 @@ What we are trying to figure out with VaR is also called "tail risk" and why it 
 The histogram drawn on Figure $2$ is like an empirical distribution, which is a probability distribution based on historical data rather than a theoretical model, which is why it is also called "model-free" distribution. The main assumption behind the choice to use empirical distribution for VaR calculation is that the probability distribution of returns in the past is a good representation of the probability distribution of returns in the future. This is not always valid, especially when the market is showing high volatility. Accurately characterizing the distribution of the data is crucial for VaR calculation, as the choice of distribution significantly impacts the accuracy of the calculated VaR. The issue poses the question, "What is the appropriate model that can accurately reflect the underlying distribution of the data?"
 
 
-## GARCH model
+## GARCH model with $t$-distribution
 GARCH stands for Generalized AutoRegressive Conditional Heteroskedasticity, in which conditional variance of the data is modeled in an autoregressive way. Let $X_{t}$ denote the time-series (in our case, log returns of McDonald's stock), then we can assume the following GRACH $(p, q)$ structure.
 
-$X_{t}=\mu+\sigma_{t}W_{t} \tag{8}$
+$X_{t}=\mu+E_{t}=\mu+\sigma_{t}W_{t} \tag{8}$
 
 $\sigma_{t}^{2} = \alpha_0 + \sum_{i=1}^{p}{\alpha_i E_{t-i}^{2}} + \sum_{i=1}^{q}{\beta_i \sigma_{t-i}^2} \tag{9}$
 
 $W_{t} \sim t_{v} \tag{10}$
 
-$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student's $t$-distribution with degrees of freedom $v$, $t_{v}$ instead of the commonly used standard Gaussian distribution to incorporate the heavy-tailed property of the financial log returns. 
+$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. E_t는 뭔가 $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student's $t$-distribution with $v$ degrees of freedom, $t_{v}(0, 1)$ or simply $t_{v}$ instead of the commonly used standard Gaussian distribution to incorporate the heavy-tailed property of the financial log returns.
 
-Student's $t$-distribution need the following three parameters, location (mean), scale (variance) and shape (degrees of freedom, $v$ in Equation $10$). The standardized $t$-distribution is the special case when it has zero mean and unit variance with some constant degrees of freedom, $v>2$, and simply referred to as $t_{v}$ like in Equation $10$. There is this useful relationship between standardized $t$-distribution and non-standardized $t$-distribution.
+여기에 GARCH 구조
+
+## McDonald's stock log returns distribution
+Now finally I am going to construct the McDonald's stock log returns distribution from the above GARCH structure with $t$-distribution. This distribution is time-dependent due to the time-dependent structure of volatility (GARCH). It is intuitive, because what we want to know is not a general time-independent distribution of log returns but a distribution of log returns at some time $t$ so that we can take into account a dynamic volatility structure.
+
+Once we estimate and substitute $\hat{\sigma}\_{t}$ for $\sigma_{t}$, $\hat{\mu}$ for $\mu$ and $\hat{v}$ for $v$ so $\hat{W}\_{t}$, we can think of our log return at time $t$, $X_{t} = \hat{\mu} + \hat{\sigma}_{t}\hat{W}\_{t}$, as a random variable from a non-standardized $t$-distribution $t\_{\hat{v}}(\hat{\mu}, \hat{\sigma}\_{t}^{2})$. It is because the estimated White Noise term, $\hat{W}\_{t}$ follows a standardized $t$-distribution with $\hat{v}$ degrees of freedom, $t\_{\hat{v}}$.
+
+실제 R코드에 넣어보고 결과를 가지고와서 위 식으로 그대로 재현하고 plot도 해놓기
+
 
 
 
