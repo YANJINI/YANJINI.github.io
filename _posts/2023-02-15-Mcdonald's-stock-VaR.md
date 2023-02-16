@@ -103,9 +103,11 @@ $X_{t}=\mu+\sigma_{t}W_{t} \tag{8}$
 
 $\sigma_{t}^{2} = \alpha_0 + \sum_{i=1}^{p}{\alpha_i E_{t-i}^{2}} + \sum_{i=1}^{q}{\beta_i \sigma_{t-i}^2} \tag{9}$
 
-$W_{t} \sim t_{v}\left(0, 1 \right)\tag{10}$
+$W_{t} \sim t_{v} \tag{10}$
 
-$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student's t-distribution.
+$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student's $t$-distribution with degrees of freedom $v$, $t_{v}$ instead of the commonly used standard Gaussian distribution to incorporate the heavy-tailed property of the financial log returns. 
+
+Student's $t$-distribution need the following three parameters, location (mean), scale (variance) and shape (degrees of freedom, $v$ in Equation $10$). The standardized $t$-distribution is the special case when it has zero mean and unit variance with some constant degrees of freedom, $v>2$, and simply referred to as $t_{v}$ like in Equation $10$. There is this useful relationship between standardized $t$-distribution and non-standardized $t$-distribution.
 
 
 

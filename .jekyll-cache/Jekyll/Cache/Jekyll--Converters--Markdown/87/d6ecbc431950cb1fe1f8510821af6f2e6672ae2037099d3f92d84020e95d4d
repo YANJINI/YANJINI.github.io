@@ -1,0 +1,41 @@
+I"4<p>저번학기 credit scoring 수업이야기. 교수는 매우 열정충만하고 좋았지만 프로젝트가 그냥 자기가 만든 파일 그대로 유지하면서 컷오프만 바꿔 수익을 늘리는 거라 수업 배운 내용을 전혀 써먹을 수 없었다. 그래서 udemy의 수업을 들은 뒤에, 또 다른 데이터인 homecredit으로 배운 내용은 다시 적용한 뒤 깔끔하게 documentation하는 것이 목표.
+<a href="https://www.kaggle.com/competitions/home-credit-default-risk/data">Home Credit Default Risk</a>
+왜 데이터는 8개 csv인데 그중에서 train, test만 쓰려고 하는지를 다른 데이터셋의 특성과 함께 정리해보기 ()</p>
+
+<h2 id="전체적인-pd-model-흐름도">전체적인 pd model 흐름도</h2>
+
+<h2 id="eda">EDA</h2>
+<p>코드 설명하는 건 jupyter open note를 첨부하는 것으로 갈음하고, (따라서 )
+여기부터는 코드의 result만 보여주고 전체적인 리서치 흐름으로 가기.</p>
+
+<p>jupyter notebook도 이 블로그 포스팅의 흐름을 따라서 만들기</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">funtion</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>this returlsff~~</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">mysql.connector</span>
+</code></pre></div></div>
+
+<p>dsjnfhss</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mydb</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">.</span><span class="n">connector</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+<span class="n">host</span><span class="o">=</span><span class="s">"localhost"</span><span class="p">,</span>
+<span class="n">user</span><span class="o">=</span><span class="s">"root"</span><span class="p">,</span>
+<span class="n">passwd</span><span class="o">=</span><span class="s">"passwd1234"</span><span class="p">,</span>
+<span class="n">database</span><span class="o">=</span><span class="s">"homecredit"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>sddjdjds</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Query application_train and application_test data from MySQL database to dataframes.
+</span><span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">'ignore'</span><span class="p">)</span>
+<span class="n">application_train</span>     <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">"SELECT * FROM application_train"</span><span class="p">,</span> <span class="n">mydb</span><span class="p">)</span>
+<span class="n">application_test</span>      <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">"SELECT * FROM application_test"</span><span class="p">,</span> <span class="n">mydb</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

@@ -1,5 +1,15 @@
 <html>
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CXPDLJQCJ5"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CXPDLJQCJ5');
+    </script>
+    <link rel="icon" type="image/png" href="/favicon_io/favicon.png">
     <link rel="shortcut icon" href="/">
     <title>How Risky is McDonald's Stock?</title>
     <meta charset='UTF-8'>
@@ -38,7 +48,7 @@ MathJax.Hub.Config({
     <ul class='wrap'>
         <li><a href='/'>Home</a></li>
         <li><a href='/blog'>Blog</a></li>
-        <li><a href='feed.xml'>RSS</a></li>
+        <li><a href='/feed.xml'>RSS</a></li>
     </ul>
 </div>
 
@@ -148,9 +158,11 @@ r_{k,\ t}
 
 <p>$\sigma_{t}^{2} = \alpha_0 + \sum_{i=1}^{p}{\alpha_i E_{t-i}^{2}} + \sum_{i=1}^{q}{\beta_i \sigma_{t-i}^2} \tag{9}$</p>
 
-<p>$W_{t} \sim t_{v}\left(0, 1 \right)\tag{10}$</p>
+<p>$W_{t} \sim t_{v} \tag{10}$</p>
 
-<p>$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student’s t-distribution.</p>
+<p>$\mu$ is the constant conditional expectation and $\sigma_{t}^{2}$ is the conditional variance varying with GARCH $(p, q)$ structure. $W_{t}$ is a White Noise innovation that is $iid$ from a standardized Student’s $t$-distribution with degrees of freedom $v$, $t_{v}$ instead of the commonly used standard Gaussian distribution to incorporate the heavy-tailed property of the financial log returns.</p>
+
+<p>Student’s $t$-distribution need the following three parameters, location (mean), scale (variance) and shape (degrees of freedom, $v$ in Equation $10$). The standardized $t$-distribution is the special case when it has zero mean and unit variance with some constant degrees of freedom, $v&gt;2$, and simply referred to as $t_{v}$ like in Equation $10$. There is this useful relationship between standardized $t$-distribution and non-standardized $t$-distribution.</p>
 
 <h2 id="appendix">Appendix</h2>
 
