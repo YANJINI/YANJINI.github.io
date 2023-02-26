@@ -20,6 +20,8 @@ categories: [all, crm]
 
 - Weight of Evidence으로 변형하는 이유를 logistic regression이랑 엮어서 수식적으로 설명하고, Naive Bayes assumption을 은연 중에 가정하고 있음을 언급하기. 이와 동시에 Naive Bayes의 특수한 경우가 logistic regression과 접점이 있음을 알리기 (코넬 수업 강의자료 링크걸기), WoE 변환이 이루어진 대표적인 feature 하나를 그래프와 함께 소개하면서 예시를 들, 부록에다가 feature를 WoE화하는 파이썬 함수 첨부하기. + IV 점수로 pre selection해서 떨궈진 변수들 설명
 
+- 일종의 time-series인 behavioral data csv로 새로운 feature 만들어볼 수 있을 듯. (exponential decay를 활용해서 최근의 정보의 큰 weight를 반영하는 식으로)
+
 - logistic regression 모델을 설명하면서 (분류에 쓰인다~) 뭐시기. 근데 이거 문제가 overconfidence이기 때문에
 정규화를 시킬거다 (정규화 방법 원리와 수식으로 정리) 후 logistic regression 돌린 결과 사진으로 보여주고 코드 첨부
 

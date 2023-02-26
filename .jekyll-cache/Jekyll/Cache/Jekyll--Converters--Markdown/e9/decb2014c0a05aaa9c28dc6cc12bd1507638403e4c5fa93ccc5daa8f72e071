@@ -1,0 +1,259 @@
+I"��<p>In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it’s necessary to have an understanding of the underlying distribution of investment returns.</p>
+
+<p>To accurately determine this distribution, various models from time series analysis can be used. The GARCH model, in particular, is known for its effectiveness in analyzing financial data. One of the main reasons to choose GARCH over other models, such as empirical distribution (actually it is even model-free), random walk, or ARIMA, is that it can capture the volatility dynamics of the stock return, which is essential for accurate VaR calculation of financial asset return.</p>
+
+<h2 id="prices-simple-returns-and-log-returns">Prices, simple returns and log returns</h2>
+<p>Whose distribution exactly do we want to figure out for VaR calculation?  Long story short, we identify the distribution of log returns of McDonald’s stock due to the desirable characteristics of log returns for statistical analysis purpose.</p>
+
+<p>The terms “prices”, “simple returns” and “log returns” refer to different ways of measuring the performance of an investment over time. Price is the most common form of financial asset data we can encounter and the other two are transformed version of this. Let $P_{t}$, $R_{t}$ and $r_{t}$ respectively denote the price, one-period simple return and one-period log return of McDonald’s stock at time $t$. Then $R_{t}$ and $r_{t}$ are defined as</p>
+
+<p>$R_{t}=\dfrac{P_{t}-P_{t-1}}{P_{t-1}}\tag{1}$</p>
+
+<p>$r_{t}=log \left(\dfrac{P_{t}}{P_{t-1}}\right)=log(1+R_{t})\tag{2}$</p>
+
+<p>The log return is frequently referred to as the continuously compounded return on account of the following mathematical principle.</p>
+
+\[\begin{align}
+&amp; e^{r_{t}}=\dfrac{P_{t}}{P_{t-1}}\\
+&amp; P_{t}=P_{t-1}e^{r_{t}}
+\end{align} \tag{3}\]
+
+<p>Both  $R_{t}$ and $r_t$ are measure of the relative movements of price, which is a useful property for comparison of performance between assets. Another technical reason we might be more interested in simple return and log return than raw price is that they could be used as a remedy for non-stationarity of price time-series (differencing).</p>
+
+<p><a id="Figure-1"></a></p>
+
+<div class="figure">
+    <img src="/image/VaR/McDonald's price, return and log return.png" style="width: 100%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 1.</span> Closing prices (top), simple returns (middle) and log returns (bottom) of McDonald's stock for past five years.
+    </div>
+</div>
+
+<p>See <a href="#code-1">A1</a> for the code to generate this figure.</p>
+
+<p>As seen on the chart of McDonald’s stock price, it is impossible to conduct a statistical analysis with this due to the non-stationarity.</p>
+
+<p>The substantial similarity simple return and log return charts exhibit is linked with the fact that the simple return metric is an approximation for  log return by a first-order Taylor expansion. The first order Taylor Expansion of $log(x)$ around $x=1$ is as follows.</p>
+
+\[\begin{align}
+log(x)
+&amp;\simeq log(1)+log^{'}(1)(x-1)\\
+&amp;\simeq 0+\dfrac{1}{1}(x-1)
+\end{align} \tag{4}\]
+
+<p>So, when $\dfrac{P_{t}}{P_{t-1}}\simeq 1$</p>
+
+\[\begin{align}
+r_{t}=log \left(\dfrac{P_{t}}{P_{t-1}}\right)
+&amp;\simeq \dfrac{P_{t}}{P_{t-1}}-1\\
+&amp;\simeq \dfrac{P_{t}-P_{t-1}}{P_{t-1}}=R_{t}
+\end{align} \tag{5}\]
+
+<p>When $R_{t}$ is small enough, the difference between simple return and log return is negligible. Log return, however, is often chosen over simple return at least for two practical reasons.</p>
+
+<p>First, log returns are additive, which makes it simpler to calculate the total return of an investment over time. Let $r_{k,\ t}$ denote log return over $k$ period at time $t$, then it is defined as</p>
+
+\[\begin{align}
+r_{k,\ t}
+&amp;=log \left(\dfrac{P_{t}}{P_{t-k}}\right)\\
+&amp;=log \left(\dfrac{P_{t}}{P_{t-1}}\right)+log \left(\dfrac{P_{t}}{P_{t-2}}\right)+\ ...\ +log \left(\dfrac{P_{t}}{P_{t-k}}\right)\\
+&amp;=r_{1,\ t}+r_{1,\ t-1}+\ ...\ +r_{1,\ t-k}\\
+&amp;=r_{t}+r_{t-1}+\ ...\ +r_{t-k}
+\end{align} \tag{6}\]
+
+<p>Second, simple returns are inherently asymmetric due to the limited liability issue (simple returns are bounded by $-100\%$) and positive skewness, and logarithmic transformation remedies this problem by mapping the range of $(-1, 0)$ to the range of $(-\infty, 0)$ and limiting big positive values.</p>
+
+<p>To summarize, log returns are often preferred in the statistical analysis of financial assets due to their suitability for comparison, symmetric nature, and ease of calculation for different time horizons. So, I will figure out the distribution of the log returns of McDonald’s stock for calculating Value at Risk (VaR).</p>
+
+<h2 id="value-at-risk-var">Value at Risk (VaR)</h2>
+<p>Value at Risk (VaR) is the most broadly used risk metric in finance and is defined as follows.</p>
+
+<p>$P(r_{k,\ t} \leq VaR_{k;\ 1-\alpha})=\alpha \tag{7}$</p>
+
+<p>In plain English, equation (7) means that the probability of the return of an asset in a given $k$ period being less than or equal to the value of the VaR for that $k$ period at a confidence level of $1 - \alpha$ is equal to $\alpha$. The most common values for $\alpha$ are $1\%$ and $5\%$, which are also universal values of significance level for hypothesis testing.</p>
+
+<div class="figure">
+    <img src="/image/VaR/Visualization of empirical VaR of McDonald's stock.png" style="width: 65%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 2.</span>The empirical 1st period VaR of log returns of McDonald's stock with confidence level of $95\%$ is $-3.05\%$. In mathematical notation, $P(r_{t} \leq VaR_{95\%})=5\%$
+    </div>
+</div>
+
+<p>See <a href="#code-2">A2</a> for the code to generate this figure.</p>
+
+<p>What we are trying to figure out with VaR is also called “tail risk” and why it goes by the name is intuitively visualized on Figure $2$. The term “tail risk” is used to describe the potential for losses or extreme events that fall outside the normal range of outcomes and occur in the tails of a probability distribution.</p>
+
+<p>The histogram drawn on Figure $2$ is like an empirical distribution, which is a probability distribution based on historical data rather than a theoretical model, which is why it is also called “model-free” distribution. The main assumption behind the choice to use empirical distribution for VaR calculation is that the probability distribution of returns in the past is a good representation of the probability distribution of returns in the future. This is not always valid, especially when the market is showing high volatility. Accurately characterizing the distribution of the data is crucial for VaR calculation, as the choice of distribution significantly impacts the accuracy of the calculated VaR. The issue poses the question, “What is the appropriate model that can accurately reflect the underlying distribution of the data?”</p>
+
+<h2 id="garch-model-with-t-distribution">GARCH model with $t$-distribution</h2>
+<p>GARCH stands for Generalized AutoRegressive Conditional Heteroskedasticity, in which the conditional variance of the data is modeled against both autoregressive (AR) process and moving average (MA) process (Equation $9$, respectively blue and red). Let $X_{t}$ denote the time-series (in our case, log returns of McDonald’s stock), then we can assume the following GRACH $(p, q)$ structure.</p>
+
+<p>$X_{t}=\mu+E_{t}=\mu+\sigma_{t}W_{t} \tag{8}$</p>
+
+<p>$\sigma_{t}^{2} = \alpha_0 + \color{#5268DE}{\sum_{i=1}^{p}{\alpha_i E_{t-i}^{2}}} + \color{#DE5252}{\sum_{i=1}^{q}{\beta_i \sigma_{t-i}^2}} \tag{9}$</p>
+
+<p>$W_{t} \sim t_{v} \tag{10}$</p>
+
+<p>$\mu$ is the constant conditional expectation and $E_{t}$ is an error term, which is a multiplication of the conditional variance, $\sigma_{t}^{2}$ and a White Noise innovation, $W_{t}$. The conditional variance, $\sigma_{t}^{2}$, has a GRACH $(p, q)$ structure in Equation $9$. $W_{t}$ is a random $iid$ variable from a standardized Student’s $t$-distribution with $v$ degrees of freedom, $t_{v}(0, 1)$ or simply $t_{v}$.</p>
+
+<p>We often use $t$-distribution as one of these so-called “heavy-tailed” distributions to incorporate the heavy-tailed property of the financial returns instead of the commonly used standard Gaussian distribution. Since Gaussian PDF decays rapidly with $e^{-x^{2}}$, $99\%$ observations appear within the range of $\pm \ 3$ standard deviation on Gaussian distribution, which is thin-tailed. On the other hand, financial returns often show heavy tails. See the R code and result below to calculate how many standard deviations the worst log return of McDonald’s stock for the past five years is from its mean.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">-11.4192</span><span class="w">
+</span></code></pre></div></div>
+
+<p>GARCH models can be seen as an extension of the ARCH model that only considers AR process. AR process captures how past shocks, $E^{2}_{t-i}$, affect current level of volatility, $\sigma^{2}_{t}$ and MA process captures the impact of past volatility, $\sigma^{2}_{t-i}$ on current volatility, $\sigma^{2}_{t}$. The order of GARCH is commonly defined with $p$ and $q$, which are respectively the order of AR process and the order of MA process. An easy way to think of GARCH model is that GARCH model could be thought of as an ARMA model for the squared error term, $E_{t}^{2}$, but the squared error term replaced with conditional variance, $\sigma_{t}^{2}$. This is why the MA terms in GARCH model are actually autoregrresive, which could be very confusing.</p>
+
+<p>GARCH model is very useful to consider some common features of financial data that we could also find visually from the bottom two plots in <a href="#Figure-1">Figure $1$</a>. They are $1)$ nearly uncorrelated (log) returns with a mean close to zero, $2)$ clusters of volatility and $3)$ some extreme outliers. Our GARCH model with $t$-distribution incorporates these features by $1)$ including a constant mean (not varying conditional expectation), $2)$ applying GARCH $(p, q)$ structure to conditional variance and $3)$ assuming $t$-distribution for the White Noise innovations. A constant mean makes sense because varying conditional expectation implies yes to such a question as “Is it possible to predict the expected stock price tomorrow given data up to today?”, which is empirically proven nearly impossible.</p>
+
+<h2 id="acf-and-pacf">ACF and PACF</h2>
+<p>We can gain insights into the orders of a GARCH model, denoted by $(p, q)$, by analyzing the results of the autocorrelation function and partial autocorrelation function of squared log returns. The autocorrelation function (ACF) and partial autocorrelation function (PACF) are tools used to analyze the patterns of correlation between a time series and its lagged values. Let $Z_{t}$ denote a time series at time $t$, then the ACF and PACF at lag $k$ are defined as</p>
+
+<p>$ACF(k)=Corr(Z_{t}, Z_{t-k}) \tag{11}$</p>
+
+<p>$PACF(k)=Corr(Z_{t}, Z_{t-k} | Z_{t-1}, Z_{t-2}, …, Z_{t-k+1}) \tag{12}$</p>
+
+<p>The ACF measures the correlation between a time series and its lagged values, without considering the effect of intermediate lags. The PACF, on the other hand, measures the same thing after removing the effect of all lags between 1 and $k-1$. The PACF does so by taking a conditional correlation to hold constant the effects of all intervening lags. This is useful in identifying the direct relationship between the time series and its lagged values.</p>
+
+<p>Our purpose in using ACF and PACF is to examine the dependence of the current conditional variance of the log returns, $\sigma_{t}^{2}$, on the squared lagged error terms, $E_{t-j}^{2}$, as well as on the lagged conditional variance, $\sigma_{t-j}^{2}$. So we can use the squared log returns as input for ACF and PACF to account for the squared effect of $E_{t}$ and $\sigma_{t}$ in Equation $8$.</p>
+
+<div class="figure">
+    <img src="/image/VaR/ACF, PACF of log returns and squared log returns.png" style="width: 100%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 3.</span>The horizontal blue dotted lines represent the 95% confidence interval. When the (partial) correlation value exceeds these bounds, it suggests a significant (partial) correlation between the current value and the corresponding lag. The log returns appear to have weak or no serial autocorrelation, which makes the constant mean, $\mu$ in Equation $8$ a reasonable choice. On the other hand, the squared log returns show significant serial autocorrelation, which justifies the varying conditional variance, $\sigma^{2}_{t}$ in Equation $9$.
+    </div>
+</div>
+
+<p>See <a href="#code-3">A3</a> for the code to generate this figure.</p>
+
+<p>It is not so easy to determine the orders of a GARCH model by looking at the results of ACF and PACF in Figure $3$, since they show significant (partial) correlations at multiple lags without clear decay. In such cases, it is standard to start with a simple model, GARCH $(1, 1)$, and examine the dependence structure of the squared standardized residuals from the fitted GARCH model using ACF and PACF plots. The standardized residual from GARCH model is the estimated White Noise term, $\hat{W_{t}}$ and is defined as</p>
+
+<p>$\hat{W_{t}} = \dfrac{E_{t}}{\hat{\sigma}_{t}} \tag{13}$</p>
+
+<p>When the square of these show a significant dependence structure, it indicates that the model is not capturing all the dynamics of the time series. In this case, we can consider increasing the order of the GARCH model and refitting it to the data until the dependence structure becomes not significant.</p>
+
+<p>The conditional variance, $\sigma_{t}^{2}$, from GARCH $(1, 1)$ model is defined as</p>
+
+<p>$\sigma_{t}^{2} = \alpha_0 + \alpha_1 E_{t-1}^{2} + \beta_1 \sigma_{t-1}^2 \tag{14}$</p>
+
+<p>We can estimate this model using the <code class="highlighter-rouge">garchFit()</code> function in the R library <code class="highlighter-rouge">fGarch</code>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">fGarch</span><span class="p">)</span><span class="w">
+</span><span class="n">heavy_fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">garchFit</span><span class="p">(</span><span class="o">~</span><span class="n">garch</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">MCD_lreturn</span><span class="p">,</span><span class="w"> </span><span class="n">cond.dist</span><span class="o">=</span><span class="s2">"std"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The estimated results of the GARCH $(1, 1)$ model for the log returns of McDonald’s stock are as follows.</p>
+
+\[\begin{gather}
+X_{t} = 0.0006123 + \sigma_{t}W_{t}\\ 
+\sigma_{t}^{2} = 0.0000196 + 0.1173E_{t-1}^{2} + 0.8132\sigma_{t-1}^{2}\\
+W_{t} \sim t_{4.653}
+\end{gather} \tag{15}\]
+
+<p>All of the parameter estimates in Equation 15, for $\mu$, $\alpha_0$, $\alpha_1$, $\beta_1$, and $v$ in Equations 8, 10, and 14, are statistically significant at a 5% significance level. I have also tested higher orders, but those are not statistically significant.</p>
+
+<p>Now, we calculate the squared standardized residuals of the fitted model and plot ACF and PACF of these.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">heavy_fit</span><span class="o">@</span><span class="n">residuals</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">heavy_fit</span><span class="o">@</span><span class="n">sigma.t</span><span class="w">
+
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfcol</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">acf</span><span class="p">(</span><span class="n">st_resid</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span><span class="w">
+</span><span class="n">pacf</span><span class="p">(</span><span class="n">st_resid</span><span class="o">^</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="figure">
+    <img src="/image/VaR/ACF, PACF of squared standardized residuals.png" style="width: 100%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 4.</span> ACF (left) and PACF (right) of the squared standardized residuals from the fitted GARCH $(1, 1)$ model. There is no significant serial dependence anymore.
+    </div>
+</div>
+
+<p>Since the squared standardized residuals, or the estimated White Noise innovations, $\hat{W}_{t}$, do not show any significant autocorrelation, GARCH $(1, 1)$ is already good enough to capture all the dynamic volatility</p>
+
+<ul>
+  <li>GARCH (1, 1) fit with t dist</li>
+  <li>risid ACF, PACF 해서 sig 없다는거 확인 시키기</li>
+  <li>그다음에는 이제 아래 단락 가서 확정된 GARCH model을 톨해 추정던 값들을 추가적으로 수식으로 보여주고 5% 1% VaR 계산하는거 보여주기. (그 이전에 GARCH 추정된 시그마 conversion하는 직관적 이유 설명 하고 노테이션에 추가하기)</li>
+  <li>k period VaR 구하기 위해서는 Monte Carlo가 필요하다는 내용 상기하고 마무리하거나 실제로 k period까지 구해보거나 (이 경우 subtitle 하고 into 조금 수정하기.)</li>
+</ul>
+
+<h2 id="mcdonalds-stock-log-returns-distribution">McDonald’s stock log returns distribution</h2>
+<p>Now, I am finally going to construct the McDonald’s stock log returns distribution from the GARCH structure with a $t$-distribution. This distribution is time-dependent due to the time-varying structure of volatility (GARCH). This is intuitive, as we want to understand a distribution of log returns at a specific time $t$, so that we can take into account the dynamic time-dependent volatility structure.</p>
+
+<p>Using a GARCH software in R, we estimate and substitute $\hat{\sigma}_{t}$ for $\sigma_{t}$, $\hat{\mu}$ for $\mu$ and $\hat{v}$ for $v$ in Equation $8$, $9$ and $10$, and reconstruct the equation as follows.</p>
+
+<p>$X_{t}=\hat{\mu}+\hat{\sigma}_{t}W_{t} \tag{13}$</p>
+
+<p>$W_{t} \sim t_{\hat{v}} \tag{14}$</p>
+
+<p>We can think of our log return at time $t$, $X_{t}$, as a random variable from a non-standardized $t$-distribution $t_{\hat{v}}(\hat{\mu}, \hat{\sigma}_{t}^{2})$. It is because  $W_{t}$ follows a standardized $t$-distribution with $\hat{v}$ degrees of freedom, $t_{\hat{v}}$.</p>
+
+<h2 id="appendix">Appendix</h2>
+
+<p><a id="code-1"></a></p>
+<h3 id="a1-prices-simple-returns-and-log-returns-plots">A1: Prices, simple returns and log returns plots</h3>
+<p>I imported the closing price data of McDonal’s stock for the past five years from Yahoo Finance through <code class="highlighter-rouge">getSymbols</code> function in <code class="highlighter-rouge">quantmod</code> library.</p>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load Mcdonald's stock data</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">tidyquant</span><span class="p">)</span><span class="w">
+
+</span><span class="n">options</span><span class="p">(</span><span class="s2">"getSymbols.warning4.0"</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">options</span><span class="p">(</span><span class="s2">"getSymbols.yahoo.warning"</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">getSymbols</span><span class="p">(</span><span class="s2">"MCD"</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'2018-01-01'</span><span class="p">,</span><span class="w">
+           </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2023-01-01"</span><span class="p">,</span><span class="n">warnings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+           </span><span class="n">auto.assign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1"># price, return, log return into one xts object</span><span class="w">
+</span><span class="n">MCD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">MCD</span><span class="p">[,</span><span class="w"> </span><span class="s2">"MCD.Close"</span><span class="p">]</span><span class="w">
+</span><span class="n">MCD_sreturn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="n">MCD</span><span class="p">)</span><span class="o">/</span><span class="n">stats</span><span class="o">::</span><span class="n">lag</span><span class="p">(</span><span class="n">MCD</span><span class="p">)</span><span class="w">  </span><span class="c1">## dplyr::lag(MCD) generates error</span><span class="w">
+</span><span class="n">MCD_lreturn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="n">MCD</span><span class="p">))</span><span class="w">
+</span><span class="n">MCD_lreturn</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">na.omit</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w">
+
+</span><span class="n">MCD_perform</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="n">MCD</span><span class="p">,</span><span class="w"> </span><span class="n">MCD_sreturn</span><span class="p">,</span><span class="w"> </span><span class="n">MCD_lreturn</span><span class="p">)</span><span class="w">
+</span><span class="n">colnames</span><span class="p">(</span><span class="n">MCD_perform</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Price"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Simple_return"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Log_return"</span><span class="p">)</span><span class="w">
+
+
+</span><span class="c1"># plot the three</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">autoplot</span><span class="p">(</span><span class="n">MCD_perform</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"Year"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_date</span><span class="p">(</span><span class="n">date_breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1 year"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">Series</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">scales</span><span class="o">=</span><span class="s2">"free_y"</span><span class="p">,</span><span class="w">
+             </span><span class="n">switch</span><span class="o">=</span><span class="s2">"y"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">strip.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+        </span><span class="n">panel.grid.major</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">element_line</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#E7E7E7"</span><span class="p">),</span><span class="w">
+        </span><span class="n">panel.grid.minor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_line</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#E7E7E7"</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_line</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">),</span><span class="w">
+        </span><span class="n">strip.placement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"outside"</span><span class="p">,</span><span class="w">
+        </span><span class="n">strip.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">14</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">"#1F77B4"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">0.5</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><a id="code-2"></a></p>
+<h3 id="a2-empirical-var-plot">A2: Empirical VaR plot</h3>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot 1-period empirical VaR with confidence of 95%</span><span class="w">
+</span><span class="n">VaR</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">quantile</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">,</span><span class="w"> </span><span class="m">0.05</span><span class="p">)</span><span class="w">
+
+</span><span class="n">hist</span><span class="p">(</span><span class="n">returns</span><span class="p">,</span><span class="w"> </span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#1F77B4"</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Daily Log Return"</span><span class="p">,</span><span class="w">
+     </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Frequency"</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">650</span><span class="p">))</span><span class="w">
+</span><span class="n">abline</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VaR</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#D62728"</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">legend</span><span class="p">(</span><span class="s2">"topright"</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"VaR (95% confidence): "</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">VaR</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">
+                                   </span><span class="s2">"%"</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#D62728"</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.8</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><a id="code-3"></a></p>
+<h3 id="a3-acf-and-pacf-plot">A3: ACF and PACF plot</h3>
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MCD_lreturn_sq</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">MCD_lreturn</span><span class="o">^</span><span class="m">2</span><span class="w">
+</span><span class="n">par</span><span class="p">(</span><span class="n">mfcol</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">))</span><span class="w">
+</span><span class="n">acf</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"ACF of log returns"</span><span class="p">)</span><span class="w">
+</span><span class="n">acf</span><span class="p">(</span><span class="n">MCD_lreturn_sq</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"ACF of squared log returns"</span><span class="p">)</span><span class="w">
+</span><span class="n">pacf</span><span class="p">(</span><span class="n">MCD_lreturn</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"PACF of log returns"</span><span class="p">)</span><span class="w">
+</span><span class="n">pacf</span><span class="p">(</span><span class="n">MCD_lreturn_sq</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-0.2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"PACF of squared log returns"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+:ET
