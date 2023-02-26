@@ -2,7 +2,7 @@
 title: How Risky is McDonald's Stock?
 subtitle: I estimate the daily Value at Risk (VaR) of McDonald's stock by using a GARCH model that takes into account heavy-tailed White Noise innovations in R.
 layout: default
-date: 2023-02-15
+date: 2023-02-26
 keywords: blogging, writing, project
 published: true
 categories: [all, qf]
