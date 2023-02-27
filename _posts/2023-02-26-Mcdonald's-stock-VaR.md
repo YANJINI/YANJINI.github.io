@@ -244,7 +244,7 @@ mu + adjusted_sd * qt(0.05, df)
 1       -0.02384826
 ```
 
-The one period (daily) Value at Risk of the log returns of McDonald's stock over the past five years with a confidence level of $95\%$ is about $-2.385\%$. In other words, we are $95\%$ confident in the fact that our daily maximum expected loss is less than about $2.385\%$.
+The one period (daily) Value at Risk of the log returns of McDonald's stock over the past five years with a confidence level of $95\%$ is about $-2.385\%$. In other words, we are $95\%$ confident in the fact that our daily maximum expected loss right after 2023-01-01 is less than about $2.385\%$.
 
 
 ## Appendix
