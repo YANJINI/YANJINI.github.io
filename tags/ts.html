@@ -1,6 +1,6 @@
 ---
-title: qf
-permalink: /blog/tags/qf
+title: ts
+permalink: /blog/tags/ts
 ---
 
 <html>
@@ -19,16 +19,8 @@ permalink: /blog/tags/qf
     <meta charset='UTF-8'>
     <meta content='width=device-width, initial-scale=1' name='viewport'/>
 
-    <meta name='description' content='Jin is a graduate student in financial data science in Poland.'>
-	<meta name='keywords' content='
-			quantitative finance,
-			credit risk modeling,
-			econometrics,
-			time-series,
-			statistical application,
-			python,
-			r
-	'>
+    {% include keywords.html %}
+    
     <meta name='author' content='Yeongjin Song'>
 
     <link rel='shortcut icon' href='/favicon.png?v=e' />
@@ -49,11 +41,11 @@ permalink: /blog/tags/qf
             </div>
         </div>
 	{% include tag.html %}
-        <h2 style="font-size:26px;">Quantitative Finance</h2>
+        <h2 style="font-size:26px;">Time series</h2>
         <hr style="margin-bottom: 1.5em;", color="#E7E7E7" noshade/>
         <div id='posts' class='section'>
             {% for post in site.posts %}
-            {% if post.categories contains 'qf' %}
+            {% if post.categories contains 'ts' %}
                 <div class='post-row'>
                     <p class='post-title'>
                         <a href="{{ post.url }}">

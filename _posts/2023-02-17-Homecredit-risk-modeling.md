@@ -7,9 +7,7 @@ keywords: blogging, writing, project
 published: false
 categories: [all, crm]
 ---
-저번학기 credit scoring 수업이야기. 교수는 매우 열정충만하고 좋았지만 프로젝트가 그냥 자기가 만든 파일 그대로 유지하면서 컷오프만 바꿔 수익을 늘리는 거라 수업 배운 내용을 전혀 써먹을 수 없었다. 그래서 udemy의 수업(링크걸W)을 들은 뒤에, 또 다른 데이터인 homecredit으로 배운 내용은 다시 적용한 뒤 깔끔하게 documentation하는 것이 목표.
-[Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data)
-왜 데이터는 8개 csv인데 그중에서 train, test만 쓰려고 하는지를 다른 데이터셋의 특성과 함께 정리해보기 ()
+During the last semester of 2022-2 in my graduate program, I completed a course entitled "Credit Scoring". The course focused on the development of a strategy for deciding which customers to grant loans to, based on the probability of default metric built using statistical modeling techniques. I appreciated the professors passion and the course was very interesting, but I could not learn much from his course, since the explanation is too vague and the final project was simply just to change some parameters in his SAS code. I wanted to build my own model to get myself familiar with credit scoring and learn theoretical backgrounds behind this. I took [this course](https://www.udemy.com/course/credit-risk-modeling-in-python/) and decided to follow the process using [Home Credit Risk] data from Kaggle with supplemental theoretical backgrounds.
 
 
 ## 전체적인 pd model 흐름도

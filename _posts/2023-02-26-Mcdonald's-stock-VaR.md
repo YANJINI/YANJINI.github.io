@@ -5,7 +5,7 @@ layout: default
 date: 2023-02-26
 keywords: blogging, writing, project
 published: true
-categories: [all, qf]
+categories: [all, ts]
 ---
 In finance, Value at Risk (VaR) is a crucial metric for assessing the risk of an investment portfolio. VaR provides an estimate of rare but potential loss an investment may face over a specific time horizon and confidence level. To calculate VaR, it's necessary to have an understanding of the underlying distribution of investment returns.
 
