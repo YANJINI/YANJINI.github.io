@@ -1,0 +1,61 @@
+I"b<p>During the first class of my advanced Econometrics course at graduate school, I volunteered to solve some exercise problems that involved proving certain estimators were unbiased and consistent mathematically. While proving whether estimators were unbiased was trivial, demonstrating consistency was more challenging. However, I remembered from my self-study in Econometrics that if the variance of the estimator converges to zero probabilistically, we can conclude that the estimator is consistent. The proof is closely related to Chebyshev’s Inequality, but I had difficulty formulating it during the class. After the class, I revisited <a href="(https://blog.naver.com/boadoboado11/222684138583)">an old post</a> I had written about Chebyshev’s Inequality in Korean from a year ago and decided to write this post.</p>
+
+<h2 id="chebyshevs-inequality">Chebyshev’s Inequality</h2>
+<p>Chebyshev’s Inequailty is fomulated as follows.</p>
+
+<p>$P(X \geq a) \leq \dfrac{E(X)}{a} \quad \forall_a \geq 0 \tag{1}$</p>
+
+<p>Here $X$ is a random variable with a finite mean and variance, and $a$ is a positive constant. The inequality always holds regardless of the distribution of $X$.</p>
+
+<p>The proof is quite straightforward.</p>
+
+<p>When there is a continuous random variable $X$ and $f(X)$ is a probability density function of $X$,</p>
+
+<p>$\begin{align}
+E(X) 
+&amp;= \displaystyle{\int_{0}^{\infty}} Xf(X)dx<br />
+&amp;\geq P(X \geq a) = \displaystyle{\int_{a}^{\infty}} Xf(X)dx
+\end{align} \tag{2}$</p>
+
+<p>Here’s the proof of Chebyshev’s inequality in LaTeX:</p>
+
+<p>Chebyshev’s inequality states that for any random variable $X$ with finite mean $\mu$ and finite variance $\sigma^2$, and for any positive constant $a$, we have:</p>
+
+\[\begin{equation} P(|X-\mu| \geq a) \leq \frac{\sigma^2}{a^2} \tag{1} \end{equation}\]
+
+<p>This inequality holds true for any random variable with finite mean and variance, regardless of whether or not $X$ is non-negative.</p>
+
+<p>To prove Chebyshev’s inequality, we start by using Markov’s inequality, which states that for any non-negative random variable $Y$ and any positive constant $t$, we have:</p>
+
+<p>$$\begin{equation} P(Y \geq t) \leq \frac{E(Y)}{t} \tag{2} \end{equation}</p>
+
+<p>To apply Markov’s inequality to the random variable $Y = (X-\mu)^2$, we first note that $Y$ is non-negative. Then we have:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>\begin{align} P((X-\mu)^2 \geq a^2) &amp;= P(</td>
+      <td>X-\mu</td>
+      <td>\geq a) \ &amp;\leq \frac{E[(X-\mu)^2]}{a^2} \ &amp;= \frac{\sigma^2}{a^2} \tag{3} \end{align}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>where the second equality follows from the definition of variance. This proves Chebyshev’s inequality for any random variable $X$ with finite mean and variance, without assuming that $X$ or $a$ are non-negative.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Note that if $X$ is non-negative, we can use the fact that $(X-\mu)^2 \geq (X-\mu)</td>
+      <td>X-\mu</td>
+      <td>$, and apply Markov’s inequality to the random variable $(X-\mu)</td>
+      <td>X-\mu</td>
+      <td>$ instead of $(X-\mu)^2$. This leads to the simplified form of Chebyshev’s inequality that is often stated for non-negative random variables:</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>\begin{equation} P(X-\mu \geq a) \leq \frac{\sigma^2}{a^2} \tag{4} \end{equation}</p>
+
+<p>where $\sigma^2$ is the variance of $X$.</p>
+:ET

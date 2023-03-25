@@ -1,20 +1,28 @@
 ---
 title: Credit Risk Modeling using Home Credit Dataset
-subtitle: Using Python, I build and evaluate a logistic regression model under Naive Bayes assumption with Weight of Evidence transformed features to predict the probability of default for 307,511 loans in the Kaggle Home Credit dataset.
+subtitle: Using Python, I build and evaluate a logistic regression model under Naive Bayes assumption with Weight of Evidence transformed features to predict the probability of default for 307,511 loans in the Kaggle Home Credit Risk dataset.
 layout: default
 date: 2023-02-15
 keywords: blogging, writing, project
 published: false
 categories: [all, crm]
 ---
-During the last semester of 2022-2 in my graduate program, I completed a course entitled "Credit Scoring". The course focused on the development of a strategy for deciding which customers to grant loans to, based on the probability of default metric built using statistical modeling techniques. I appreciated the professors passion and the course was very interesting, but I could not learn much from his course, since the explanation is too vague and the final project was simply just to change some parameters in his SAS code. I wanted to build my own model to get myself familiar with credit scoring and learn theoretical backgrounds behind this. I took [this course](https://www.udemy.com/course/credit-risk-modeling-in-python/) and decided to follow the process using [Home Credit Risk] data from Kaggle with supplemental theoretical backgrounds.
+During the last semester of 2022-2 in my graduate program, I completed a course entitled "Credit Scoring". The course focused on developing a strategy for deciding which customers to grant loans to, based on the probability of default metric built using statistical modeling techniques. While I appreciated the professor's passion and found the course interesting, I didn't learn as much as I hoped. The explanations were too vague, and the final project only involved changing some parameters in his SAS code. To better understand credit scoring and the theoretical background behind it, I took [Credit Risk Modeling in Python](https://www.udemy.com/course/credit-risk-modeling-in-python/) course from Udemy and decided to build my own model using [Home Credit Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data) data from Kaggle and supplement it with additional theoretical material.
+
+## Preliminary EDA
 
 
-## 전체적인 pd model 흐름도
-전체적으로 어떻게 모델링이 진행되는지 설명  (udemy crm 수업 참조)
-- EDA를 통해 features와 target에 대한 이해를 높히고 missing value나 바꿔야할 value의 경우 (데이터타입에 문제있는 경우)를 파악해두기.
+The primary objective of credit risk modeling is to assess the probability of borrowers defaulting on their loans. This is achieved using statistical classification models, such as logistic regression, with borrowers' personal data collected either during or after the loan application stage. 
 
-- 위에서 발견한 문제들을 반영해서 조금씩 수정해주 (na impute를 하거나 등등)
+This blog post about the credit risk modeling project goes with the following content flow.
+
+
+
+
+
+3. EDA를 통해 features와 target에 대한 이해를 높히고 missing value나 바꿔야할 value의 경우 (데이터타입에 문제있는 경우)를 파악해두기.
+
+4. 위에서 발견한 문제들을 반영해서 조금씩 수정해주 (na impute를 하거나 등등)
 
 - Weight of Evidence으로 변형하는 이유를 logistic regression이랑 엮어서 수식적으로 설명하고, Naive Bayes assumption을 은연 중에 가정하고 있음을 언급하기. 이와 동시에 Naive Bayes의 특수한 경우가 logistic regression과 접점이 있음을 알리기 (코넬 수업 강의자료 링크걸기), WoE 변환이 이루어진 대표적인 feature 하나를 그래프와 함께 소개하면서 예시를 들, 부록에다가 feature를 WoE화하는 파이썬 함수 첨부하기. + IV 점수로 pre selection해서 떨궈진 변수들 설명
 

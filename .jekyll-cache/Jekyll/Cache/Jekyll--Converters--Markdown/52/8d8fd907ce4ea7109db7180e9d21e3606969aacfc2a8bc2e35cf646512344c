@@ -1,0 +1,51 @@
+I"A<p>During the first class of my advanced Econometrics course at graduate school, I volunteered to solve some exercise problems that involved proving certain estimators were unbiased and consistent mathematically. While proving whether estimators were unbiased was trivial, demonstrating consistency was more challenging. However, I remembered from my self-study in Econometrics that if the variance of the estimator converges to zero probabilistically, we can conclude that the estimator is consistent. The proof is closely related to Markov’s Inequality, but I had difficulty formulating it during the class. After the class, I revisited <a href="(https://blog.naver.com/boadoboado11/222684138583)">an old post</a> I had written about Markov’s Inequality in Korean from a year ago and decided to write this post.</p>
+
+<h2 id="markovs-inequality">Markov’s Inequality</h2>
+<p>Markov’s Inequailty is fomulated as follows.</p>
+
+<p>$P(X \geq a) \leq \dfrac{E(X)}{a} \quad \forall_X \geq 0, \forall_a \geq 0 \tag{1}$</p>
+
+<p>Here $X$ is a positive random variable with a finite mean and variance, and $a$ is a positive constant. The inequality always holds regardless of the distribution of $X$. The proof is quite straightforward.</p>
+
+<p>When there is a continuous random variable $X$ and $f(X)$ is a probability density function of $X$,</p>
+
+\[\begin{align}
+E(X)
+&amp;= \displaystyle{\int_{0}^{\infty}} xf(x)dx\\
+&amp;= \displaystyle{\int_{0}^{a}} xf(x)dx + \displaystyle{\int_{a}^{\infty}} xf(x)dx\\
+&amp;\geq \displaystyle{\int_{a}^{\infty}} xf(x)dx\\
+&amp;\geq \displaystyle{\int_{a}^{\infty}} af(x)dx = aP(X \geq a) \quad \because x \geq a
+\end{align} \tag{2}\]
+
+<p>It is easy to show the Equation $1$ holds by dividing the both sides of the Equation $2$. We can use this inequality to prove consistency of estimators. Consistency of estimators means an estimator probabilistically converges to its true parameter as the sample size goes to infinity. The mathematical definition of consistency is as follows.</p>
+
+<p>When $\theta_{N}$ is an estimator with sample size of $N$ and the true parameter is $\theta$,</p>
+
+<p>$P\left(|\theta_{N} - \theta| \geq \epsilon \right) \xrightarrow{N \to \infty} 0 \tag{3}$</p>
+
+<p>Let’s square both sides and apply the Markov’s Inequality.</p>
+
+<p>$P\left((\theta_{N} - \theta)^{2} \geq \epsilon^{2} \right) \leq \dfrac{E\left[ (\theta_{N} - \theta)^{2} \right]}{\epsilon^{2}}\tag{4}$</p>
+
+<p>$E\left[ (\theta_{N} - \theta)^{2} \right]$ on the right-hand side in Equation $4$ is just a variance notation. So, if we show the variance of the estimator with its true mean converges to zero, we can say that the estimator consistent.</p>
+
+<h2 id="proof-of-consistency">Proof of consistency</h2>
+<p>For $iid$ random variable $X_{i}$ from the normal distribution with mean $\mu$ and variance $\sigma^{2}$,</p>
+
+<p>$\hat{\theta}_{N} = \dfrac{1}{N} + \dfrac{1}{N} \sum_{i=1}^{N} X_{i} \tag{5}$</p>
+
+<p>Let’s calculate the variance of the estimator.</p>
+
+\[\begin{align}
+Var\left(\hat{\theta}_{N}\right) 
+&amp;= Var\left(\dfrac{1}{N}\right) + Var\left(\dfrac{1}{N} \sum_{i=1}^{N}X\_{i}\right)\\
+&amp;= \dfrac{1}{N^{2}} \sum_{i=1}^{N} Var(X_i) \quad \because iid\\
+&amp;= \dfrac{1}{N}\sigma^{2}
+\end{align} \tag{6}\]
+
+<p>The variance definitely c</p>
+
+<p>$\hat{\theta}_{N} = X_{N} \tag{5}$</p>
+
+<p>$X_{N}$ is the $N$-th observation in our sample.</p>
+:ET

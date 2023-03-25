@@ -1,0 +1,19 @@
+I"i<p>During the first class of my advanced Econometrics course at graduate school, I volunteered to solve some exercise problems that involved proving certain estimators were unbiased and consistent mathematically. While proving whether estimators were unbiased was trivial, demonstrating consistency was more challenging. However, I remembered from my self-study in Econometrics that if the variance of the estimator converges to zero probabilistically, we can conclude that the estimator is consistent. The proof is closely related to Chebyshev’s Inequality, but I had difficulty formulating it during the class. After the class, I revisited <a href="(https://blog.naver.com/boadoboado11/222684138583)">an old post</a> I had written about Chebyshev’s Inequality in Korean from a year ago and decided to write this post.</p>
+
+<h2 id="chebyshevs-inequality">Chebyshev’s Inequality</h2>
+<p>Chebyshev’s Inequailty is fomulated as follows.</p>
+
+<p>$P(X \geq a) \leq \dfrac{E(X)}{a} \quad \forall_{X} \geq 0, \forall_a \geq 0 \tag{1}$</p>
+
+<p>Here $X$ is a random variable and a is a constant. The inequality always holds regardless of the distribution of $X$.</p>
+
+<p>Chebyshev’s inequality holds for any random variable $X$ with a finite mean and variance, but it is typically stated for non-negative random variables because this simplifies the expression of the inequality.</p>
+
+<p>When $X$ is non-negative, the square of $X$ is also non-negative, which implies that $E(X^2) \geq [E(X)]^2$. This inequality can be substituted into Chebyshev’s inequality to obtain the simplified form:</p>
+
+<p>$P(X \geq a) \leq \dfrac{Var(X)}{a^2}$</p>
+
+<p>where $Var(X)$ is the variance of $X$. This form of Chebyshev’s inequality is often more useful in practice, because it provides a simpler and more intuitive bound on the tail probabilities of $X$.</p>
+
+<p>However, it is worth noting that Chebyshev’s inequality still holds for random variables that are not necessarily non-negative, as long as they have a finite mean and variance. In this case, the original form of Chebyshev’s inequality can be used to bound the tail probabilities of $X$.</p>
+:ET
