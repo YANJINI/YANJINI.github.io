@@ -2,7 +2,7 @@
 title: Proof of Consistency using Markov's Inequality
 subtitle: Markov's inequality is a useful statistical tool used to prove the consistency of an estimator. I discuss the proof of Markov's inequality and demonstrate its use in proving the consistency of an example estimator.
 layout: default
-date: 2023-02-15
+date: 2023-03-25
 keywords: blogging, writing
 published: true
 categories: [all, econ]
