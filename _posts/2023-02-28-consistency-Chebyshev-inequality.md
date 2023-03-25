@@ -1,6 +1,6 @@
 ---
 title: Proof of Consistency using Markov's Inequality
-subtitle: Markov's inequality is a useful statistical tool used to prove the consistency of an estimator. I discuss the proof of Markov's inequality and demonstrate its use in proving the consistency of an example estimator.
+subtitle: Markov's Inequality is a useful statistical tool used to prove the consistency of an estimator. I discuss the proof of Markov's Inequality and demonstrate its use in proving the consistency of an example estimator.
 layout: default
 date: 2023-03-25
 keywords: blogging, writing
@@ -37,23 +37,35 @@ Here $\epsilon$ is any positive number. Let's square both sides and apply the Ma
 
 $P\left((\hat{\theta}\_{N} - \theta)^{2} \geq \epsilon^{2} \right) \leq \dfrac{E\left[ (\hat{\theta}_{N} - \theta)^{2} \right]}{\epsilon^{2}}\tag{4}$
 
-$E\left[ (\hat{\theta}_{N} - \theta)^{2} \right]$ on the right-hand side in Equation $4$ is just a variance notation when $\hat{\theta}\_{N}$ is an unbiased estimator. So, if we show the variance of the estimator with its true mean converges to zero, we can say that the estimator consistent.
+$E\left[ (\hat{\theta}\_{N} - \theta)^{2} \right]$ on the right-hand side in Equation $4$ is just a variance notation when $\hat{\theta}\_{N}$ is asymptotically unbiased, which means when $E(\hat{\theta}_{N}) \xrightarrow{N \to \infty} \theta$. This is because the asymptotic relationship below holds.
 
+$Var\left(\hat{\theta}\_{N}\right) = E\left[(\hat{\theta}\_{N} - E(\hat{\theta}_{N})^{2})\right] \xrightarrow{N \to \infty} E\left[ (\hat{\theta}\_{N} - \theta)^{2} \right] \tag{5}$
+
+So, if we show the variance of the estimator converges to zero as $N \to \infty$, we can say that the estimator consistent.
 
 
 ## Proof of consistency
 For $iid$ random variable $X_{i}$ from the normal distribution with mean $\mu$ and variance $\sigma^{2}$,
 
-$$\hat{\theta}_{N} = \dfrac{1}{N} \sum_{i=1}^{N} X\_{i} \tag{5}$$
+$$\hat{\theta}_{N} = \dfrac{1}{N} + \dfrac{1}{N} \sum_{i=1}^{N} X\_{i} \tag{6}$$
+
+This estimator is biased, but asymptotically unbiased as follows.
+
+$$\begin{align}
+E(\hat{\theta}_{N})
+&= E\left(\dfrac{1}{N}\right) + E\left(\dfrac{1}{N}\sum_{i=1}^{N}X_{i}\right)\\
+&= \dfrac{1}{N} + \dfrac{1}{N}N\mu\\
+&= \dfrac{1}{N} + \mu \xrightarrow{N \to \infty} \mu
+\end{align} \tag{7}$$
 
 Let's calculate the variance of the estimator.
 
 $$\begin{align}
 Var\left(\hat{\theta}_{N}\right) 
-&= Var\left(\dfrac{1}{N} \sum_{i=1}^{N}X\_{i}\right)\\
+&= Var\left(\dfrac{1}{N}\right) + Var\left(\dfrac{1}{N} \sum_{i=1}^{N}X\_{i}\right)\\
 &= \dfrac{1}{N^{2}} \sum_{i=1}^{N} Var(X_i) \quad \because iid\\
 &= \dfrac{1}{N}\sigma^{2}
-\end{align} \tag{6}$$
+\end{align} \tag{8}$$
 
 The variance definitely converges to zero when $N \to \infty$. 
 
@@ -63,4 +75,6 @@ P\left(|\hat{\theta}_{N} - \mu| \geq \epsilon \right)
 &\leq \dfrac{E\left[ (\hat{\theta}_{N} - \mu)^{2} \right]}{\epsilon^{2}} = \dfrac{Var\left(\hat{\theta}_{N}\right)}{\epsilon^{2}}
 
 \xrightarrow{N \to \infty} 0 
-\end{align} \tag{7}$$
+\end{align} \tag{9}$$
+
+So, we can conclude that the estimator is a biased, but consistent estimator.

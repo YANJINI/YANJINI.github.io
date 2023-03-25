@@ -55,7 +55,7 @@ MathJax.Hub.Config({
     <div class='front-matter'>
         <div class='wrap'>
             <h1>Proof of Consistency using Markov's Inequality</h1>
-            <h4>Markov's inequality is a useful statistical tool used to prove the consistency of an estimator. I discuss the proof of Markov's inequality and demonstrate its use in proving the consistency of an example estimator.</h4>
+            <h4>Markov's Inequality is a useful statistical tool used to prove the consistency of an estimator. I discuss the proof of Markov's Inequality and demonstrate its use in proving the consistency of an example estimator.</h4>
             <div class='bylines'>
                 <div class='byline'>
                     <h3>Published</h3>
@@ -95,21 +95,34 @@ E(X)
 
 <p>$P\left((\hat{\theta}_{N} - \theta)^{2} \geq \epsilon^{2} \right) \leq \dfrac{E\left[ (\hat{\theta}_{N} - \theta)^{2} \right]}{\epsilon^{2}}\tag{4}$</p>
 
-<p>$E\left[ (\hat{\theta}_{N} - \theta)^{2} \right]$ on the right-hand side in Equation $4$ is just a variance notation when $\hat{\theta}_{N}$ is an unbiased estimator. So, if we show the variance of the estimator with its true mean converges to zero, we can say that the estimator consistent.</p>
+<p>$E\left[ (\hat{\theta}_{N} - \theta)^{2} \right]$ on the right-hand side in Equation $4$ is just a variance notation when $\hat{\theta}_{N}$ is asymptotically unbiased, which means when $E(\hat{\theta}_{N}) \xrightarrow{N \to \infty} \theta$. This is because the asymptotic relationship below holds.</p>
+
+<p>$Var\left(\hat{\theta}_{N}\right) = E\left[(\hat{\theta}_{N} - E(\hat{\theta}_{N})^{2})\right] \xrightarrow{N \to \infty} E\left[ (\hat{\theta}_{N} - \theta)^{2} \right] \tag{5}$</p>
+
+<p>So, if we show the variance of the estimator converges to zero as $N \to \infty$, we can say that the estimator consistent.</p>
 
 <h2 id="proof-of-consistency">Proof of consistency</h2>
 <p>For $iid$ random variable $X_{i}$ from the normal distribution with mean $\mu$ and variance $\sigma^{2}$,</p>
 
-\[\hat{\theta}_{N} = \dfrac{1}{N} \sum_{i=1}^{N} X\_{i} \tag{5}\]
+\[\hat{\theta}_{N} = \dfrac{1}{N} + \dfrac{1}{N} \sum_{i=1}^{N} X\_{i} \tag{6}\]
+
+<p>This estimator is biased, but asymptotically unbiased as follows.</p>
+
+\[\begin{align}
+E(\hat{\theta}_{N})
+&amp;= E\left(\dfrac{1}{N}\right) + E\left(\dfrac{1}{N}\sum_{i=1}^{N}X_{i}\right)\\
+&amp;= \dfrac{1}{N} + \dfrac{1}{N}N\mu\\
+&amp;= \dfrac{1}{N} + \mu \xrightarrow{N \to \infty} \mu
+\end{align} \tag{7}\]
 
 <p>Let’s calculate the variance of the estimator.</p>
 
 \[\begin{align}
 Var\left(\hat{\theta}_{N}\right) 
-&amp;= Var\left(\dfrac{1}{N} \sum_{i=1}^{N}X\_{i}\right)\\
+&amp;= Var\left(\dfrac{1}{N}\right) + Var\left(\dfrac{1}{N} \sum_{i=1}^{N}X\_{i}\right)\\
 &amp;= \dfrac{1}{N^{2}} \sum_{i=1}^{N} Var(X_i) \quad \because iid\\
 &amp;= \dfrac{1}{N}\sigma^{2}
-\end{align} \tag{6}\]
+\end{align} \tag{8}\]
 
 <p>The variance definitely converges to zero when $N \to \infty$.</p>
 
@@ -119,7 +132,9 @@ P\left(|\hat{\theta}_{N} - \mu| \geq \epsilon \right)
 &amp;\leq \dfrac{E\left[ (\hat{\theta}_{N} - \mu)^{2} \right]}{\epsilon^{2}} = \dfrac{Var\left(\hat{\theta}_{N}\right)}{\epsilon^{2}}
 
 \xrightarrow{N \to \infty} 0 
-\end{align} \tag{7}\]
+\end{align} \tag{9}\]
+
+<p>So, we can conclude that the estimator is a biased, but consistent estimator.</p>
 
     </div>
 </div>
