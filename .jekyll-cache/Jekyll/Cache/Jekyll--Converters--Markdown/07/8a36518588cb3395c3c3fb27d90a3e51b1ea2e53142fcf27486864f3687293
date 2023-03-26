@@ -1,0 +1,9 @@
+I"^<h2 id="taylors-series">Taylor’s Series</h2>
+<p>Taylor’s Series is a useful mathematical tool to approximate an unknown function with polynomial terms around a specific point.</p>
+
+<p>Let $f(x)$ be an unknown infinitely-differentiable function of a variable $x$ and $a$ be a specific point around which we want to approximate the function.</p>
+
+<p>$f(x) = c_0+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+…\tag{1}$</p>
+
+<p>The coefficients for the polynomials, $c_{0}, c_{1}, c_{2}, c_{3}, …$ are found by taking derthe both unknown function, $f(x)$, and polynomial function on the right-hand side</p>
+:ET
