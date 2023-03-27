@@ -1,0 +1,87 @@
+I"�.<h2 id="taylors-series">Taylor’s Series</h2>
+<p>Taylor’s Series is a useful mathematical tool for approximating an unknown function with polynomial terms around a specific point. Let $f(x)$ be an infinitely-differentiable function of a variable $x$ and $a$ be the point around which we want to approximate the function. The function can be represented by the linear combination of the polynomials as follows.</p>
+
+<p>$f(x) = c_0+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+…\tag{1}$</p>
+
+<p>Here, we subtract the constant $a$ from all polynomial terms for notational convenience. We can find the coefficients for the polynomials $c_0, c_1, c_2,$ and so on, by taking the values of the derivatives of both sides at the point $x=a$ as follows.</p>
+
+\[\begin{align}
+f(a) &amp;= c_{0}\\
+f^{'}(a) &amp;= 1! \cdot c_{1}\\
+f^{''}(a) &amp;= 2! \cdot c_{2}\\
+f^{'''}(a) &amp;= 3! \cdot c_{3}\\
+&amp; \vdots
+\end{align} \tag{2}\]
+
+<p>Then we can rewrite Equation $1$ as follows.</p>
+
+\[\begin{align}
+f(x) &amp;= f(a) + \dfrac{f^{'}(a)}{1!}(x-a) + \dfrac{f^{''}(a)}{2!}(x-a)^{2} + \dfrac{f^{'''}(a)}{3!}(x-a)^{3} + ...\\
+&amp;= \sum^{\infty}_{i=0}\frac{f^i(a)}{i!}(x-a)^i
+\end{align} \tag{3}\]
+
+<p>Here, $f^{(i)}$ denotes the $i$-th order derivative of $f$, and $f^{(0)} = f$. The approximation is well-behaved when $x$ is close enough to $a$. The plot of the approximation of the log functions around $x=1$ below shows this property well. The approximations get poorer as $x$ gets away from $1$. But this Equation $4$ is also handy for deriving</p>
+
+<p><a id="Figure-1"></a></p>
+
+<div class="figure">
+    <img src="/image/why_differentiation/log_taylor.png" style="width: 80%; display: block; margin: 0 auto;" />
+    <div class="caption">
+        <span class="caption-label">Figure 1. Taylor approximations of log function around $x=1$.</span> 
+    </div>
+</div>
+
+<p>See <a href="#code-1">A1</a> for the code to generate this figure.</p>
+
+<p>We can further generalize Equation $3$ by setting $x = a+h$, where $h$ is a small enough constant.</p>
+
+\[\begin{align}
+f(a+h) &amp;= f(a) + \dfrac{f^{'}(a)}{1!}h + \dfrac{f^{''}(a)}{2!}h^{2} + \dfrac{f^{'''}(a)}{3!}h^{3} + ...\\
+&amp;= \sum^{\infty}_{i=0}\frac{f^i(a)}{i!}h^i
+\end{align} \tag{4}\]
+
+<p>Equation $4$ is useful because it explicitly shows how the output changes as the input varies between $a+h$ and $a$, which can be calculated as $f(a+h) - f(a)$. This is fundamental for numerical optimization, where we try to find the optimal point of an unknown function given only input and output.</p>
+
+<h2 id="first-order-condition-foc">First Order Condition (FOC)</h2>
+
+<h2 id="second-order-condition-soc">Second Order Condition (SOC)</h2>
+
+<h2 id="complete-second-order-condition-csoc">Complete Second Order Condition (CSOC)</h2>
+
+<h2 id="appendix">Appendix</h2>
+
+<p><a id="code-1"></a></p>
+<h3 id="a1-plot-taylor-approximations-of-log">A1: Plot Taylor approximations of log</h3>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot log function</span><span class="w">
+</span><span class="n">xx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">)</span><span class="w">
+</span><span class="n">yy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="w">
+
+</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="w"> </span><span class="n">yy</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"l"</span><span class="p">,</span><span class="w">
+     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"x"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"log(x)"</span><span class="p">,</span><span class="w"> 
+     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"The log function"</span><span class="p">,</span><span class="w"> 
+     </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">-2</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">
+     </span><span class="n">xlim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w">
+
+
+
+</span><span class="c1"># plot Talor approximations of log function around x = 1</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="n">hh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">)</span><span class="w">
+
+</span><span class="n">first_ord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hh</span><span class="w">
+</span><span class="n">second_ord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">first_ord</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="m">-2</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hh</span><span class="o">^</span><span class="m">2</span><span class="w">
+</span><span class="n">third_ord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">second_ord</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">2</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="m">-3</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hh</span><span class="o">^</span><span class="m">3</span><span class="w">
+</span><span class="n">fourth_ord</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">third_ord</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">6</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="m">-4</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">hh</span><span class="o">^</span><span class="m">4</span><span class="w">
+
+</span><span class="n">lines</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">hh</span><span class="p">,</span><span class="w"> </span><span class="n">first_ord</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">hh</span><span class="p">,</span><span class="w"> </span><span class="n">second_ord</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">)</span><span class="w"> 
+</span><span class="n">lines</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">hh</span><span class="p">,</span><span class="w"> </span><span class="n">third_ord</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">)</span><span class="w">
+</span><span class="n">lines</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">hh</span><span class="p">,</span><span class="w"> </span><span class="n">fourth_ord</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">legend</span><span class="p">(</span><span class="s2">"topleft"</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"Log function"</span><span class="p">,</span><span class="w"> </span><span class="s2">"First order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Second order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Third order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Fourth order"</span><span class="p">),</span><span class="w"> 
+       </span><span class="n">col</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s2">"black"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">),</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="w">
+  
+
+</span></code></pre></div></div>
+:ET
