@@ -4,12 +4,12 @@ subtitle: Optimization involves finding the minimum or maximum of unknown functi
 layout: default
 date: 2023-03-26
 keywords: blogging, writing, project
-published: true
+published: false
 categories: [all, opt]
 ---
 
-## Taylor's Series
-Taylor's Series is a useful mathematical tool for approximating an unknown function with polynomial terms around a specific point. Let $f(x)$ be an infinitely-differentiable function of a variable $x$ and $a$ be the point around which we want to approximate the function. The function can be represented by the linear combination of the polynomials as follows.
+## Taylor's series
+Taylor's series is a useful mathematical tool for approximating an unknown function with polynomial terms around a specific point. Let $f(x)$ be an infinitely-differentiable function of a variable $x$ and $a$ be the point around which we want to approximate the function. The function can be represented by the linear combination of the polynomials as follows.
 
 $f(x) = c_0+c_{1}(x-a)+c_{2}(x-a)^{2}+c_{3}(x-a)^{3}+...\tag{1}$
 
@@ -55,10 +55,24 @@ Equation $4$ is useful because it explicitly shows how the output changes as the
 
 
 ## First Order Condition (FOC)
+We are trying to optimize a function $f(x)$ with respect to $x$. First Order Condition (FOC) states that the optimal value of the function is related to a point where the derivative of the function is equal to zero. Consider the Taylor series of $f(x)$ around a point $a$, as given in Equation $3$ and take the first derivative of this expansion with respect to $x$.
 
-## Second Order Condition (SOC)
+$$\begin{align}
+\dfrac{df(x)}{dx} &= f^{'}(a) + \dfrac{f^{'}(a)}{1!}(x-a) + \dfrac{f^{''}(a)}{2!}(x-a)^{2} + \dfrac{f^{'''}(a)}{3!}(x-a)^{3} + ...\\
+&= \sum^{\infty}_{i=0}\frac{f^i(a)}{i!}(x-a)^i
+\end{align} \tag{5}$$
+
+You are correct that $f(a)$ is a constant, and hence its derivative is zero. In Equation 4, we can see that the first term on the right-hand side is $f(a)$, which does not depend on the variable $h$. Therefore, when we take the derivative of $f(a)$ with respect to $h$, we get zero.
+
+However, the subsequent terms in Equation 4 involve derivatives of $f(x)$ evaluated at $a$. These terms do depend on the variable $h$, and hence they can be differentiated with respect to $h$.
+
+For example, the second term in Equation 4 is $\frac{f'(a)}{1!}h$. The derivative of this term with respect to $h$ is simply $\frac{f'(a)}{1!}$, which is a constant. Similarly, the third term in Equation 4 is $\frac{f''(a)}{2!}h^2$, and its derivative with respect to $h$ is $\frac{f''(a)}{1!}h$, which is also a constant times $h$.
+
+So while $f(a)$ is a constant and its derivative is zero, the subsequent terms in Equation 4 do depend on $h$ and can be differentiated with respect to $h$.
 
 ## Complete Second Order Condition (CSOC)
+
+
 
 ## Appendix
 
